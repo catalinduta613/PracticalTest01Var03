@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PracticalTest01Var03</string>
+    <string name="navigate_to_secondary_activity_button">Navigate To Secondary Activity</string>
 </resources>
