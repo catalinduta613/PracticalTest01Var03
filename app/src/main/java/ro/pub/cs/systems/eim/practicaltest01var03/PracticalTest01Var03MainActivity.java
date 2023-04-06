@@ -2,7 +2,9 @@ package ro.pub.cs.systems.eim.practicaltest01var03;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +34,13 @@ public class PracticalTest01Var03MainActivity extends AppCompatActivity {
             }
             int result = Integer.valueOf(secondEditText.getText().toString());
             switch(view.getId()) {
+                case R.id.navigate_to_secondary_activity_button:
+                    Log.d("D", "Navigating to secondary activity");
+                    Intent intent = new Intent(getApplicationContext(), PracticalTest01Var03SecondaryActivity.class);
+                    String resultTT = resultEditText.getText().toString();
+                    intent.putExtra(Constants.resultString, resultTT);
+                    startActivityForResult(intent, Constants.SECONDARY_ACTIVITY_REQUEST_CODE);
+                    break;
                 case R.id.plus_button:
                     result += firstNumber;
                     if (resultString == null) {
@@ -69,6 +78,7 @@ public class PracticalTest01Var03MainActivity extends AppCompatActivity {
         plusButton = findViewById(R.id.plus_button);
         minusButton = findViewById(R.id.minus_button);
         navigateToSecondaryActivityButton = findViewById(R.id.navigate_to_secondary_activity_button);
+        navigateToSecondaryActivityButton.setOnClickListener(buttonClickListener);
         resultEditText.setText("");
         secondEditText.setText(String.valueOf(0));
         plusButton.setOnClickListener(buttonClickListener);
@@ -81,6 +91,13 @@ public class PracticalTest01Var03MainActivity extends AppCompatActivity {
         savedInstanceState.putString(Constants.firstNumber, firstEditText.getText().toString());
         savedInstanceState.putString(Constants.resultString, resultEditText.getText().toString());
         savedInstanceState.putString(Constants.resultNumber, secondEditText.getText().toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        super.onActivityResult(requestCode, resultCode, intent);
+        Log.d("D", "onActivityResult() method was invoked");
+        Toast.makeText(this, "The activity returned with result " + resultCode, Toast.LENGTH_LONG).show();
     }
 
     @Override
